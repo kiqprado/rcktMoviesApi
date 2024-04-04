@@ -1,6 +1,8 @@
 require('dotenv/config')
 require('express-async-errors')
 
+import { connection as knexdb } from './database/knex/index.js'
+
 const migrationsRun = require('./database/sqlite/migrations')
 const AppError = require('./utils/AppError')
 const cors = require('cors')
@@ -8,6 +10,9 @@ const express = require('express')
 const routes = require('./routes')
 
 const uploadConfig = require('./configs/uploads')
+
+migrate();
+knexdb.migrate.latest()
 
 const app = express()
 app.use(cors())
