@@ -11,7 +11,6 @@ const routes = require('./routes')
 
 const uploadConfig = require('./configs/uploads')
 
-migrate();
 knexdb.migrate.latest()
 
 const app = express()
@@ -23,6 +22,7 @@ app.use('/files', express.static(uploadConfig.UPLOADS_FOLDER))
 app.use(routes)
 
 migrationsRun()
+migrate();
 
 app.use((error, request, response, next) => {
   if (error instanceof AppError) {
