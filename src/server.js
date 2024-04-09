@@ -1,9 +1,11 @@
 require('dotenv/config')
 require('express-async-errors')
 
-const { connection: knexdb } = require('./database/knex/index.js')
+const { connection: knexdb } = require('./database/knex/index')
 
 const migrationsRun = require('./database/sqlite/migrations')
+const runMigrations = require('./database/knex/index')
+
 const AppError = require('./utils/AppError')
 const cors = require('cors')
 const express = require('express')
@@ -20,9 +22,8 @@ app.use('/files', express.static(uploadConfig.UPLOADS_FOLDER))
 app.use(routes)
 
 migrationsRun()
+runMigrations()
 
-migrate();
-knexdb.migrate.latest()
 
 app.use((error, request, response, next) => {
   if (error instanceof AppError) {
