@@ -3,6 +3,8 @@ const config = require('../../../knexfile');
 
 const connection = knex(config.development);
 
+module.exports = connection
+
 async function runMigrations() {
   const migrationFiles = [
     require('./migrations/20231026132934_createNotes'),
@@ -23,12 +25,3 @@ async function runMigrations() {
 
 module.exports = runMigrations;
 
-
-
-
-/* const config = require('../../../knexfile')
-const knex = require('knex')
-
-const connection = knex(config.development)
-
-module.exports = connection */
